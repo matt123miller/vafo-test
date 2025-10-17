@@ -1,0 +1,37 @@
+---
+import { Image } from "astro:assets";
+import Cart from "../assets/icons/icon-cart.png";
+import ChevronDown from "../assets/icons/icon-chevron-down.png";
+import ChevronLeft from "../assets/icons/icon-chevron-left.png";
+import ChevronRight from "../assets/icons/icon-chevron-right.png";
+import ChevronUp from "../assets/icons/icon-chevron-up.png";
+import Menu from "../assets/icons/icon-menu.png";
+import Search from "../assets/icons/icon-search.png";
+import Star from "../assets/icons/icon-star-default.png";
+import StarFull from "../assets/icons/icon-star-full.png";
+import StarPartial from "../assets/icons/icon-star-partial.png";
+import User from "../assets/icons/icon-user.png";
+
+const icons = {
+  chevronUp: ChevronUp,
+  chevronDown: ChevronDown,
+  chevronLeft: ChevronLeft,
+  chevronRight: ChevronRight,
+  menu: Menu,
+  search: Search,
+  user: User,
+  cart: Cart,
+  star: Star,
+  starFull: StarFull,
+  starPartial: StarPartial,
+} as const;
+
+interface Props {
+  name: keyof typeof icons;
+}
+
+const { name } = Astro.props;
+const iconSrc = icons[name];
+---
+
+<Image src={iconSrc} alt={name} />
