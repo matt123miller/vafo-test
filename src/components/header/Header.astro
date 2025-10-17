@@ -1,11 +1,14 @@
 ---
 import Logo from "@/assets/logo-full.png";
 import { Image } from "astro:assets";
+
+import MobileNav from "./MobileNav.astro";
+import MobileUserActions from "./MobileUserActions.astro";
 ---
 
 <header>
   <div class="header-left">
-    left content
+    <MobileNav />
     <!-- <nav>
       <ul>
         <li></li>
@@ -20,14 +23,14 @@ import { Image } from "astro:assets";
       alt="Pooch & Mutt logo, with a dogs face located centrally whose nose and mouth form the ampersand"
     />
   </div>
-  <div class="header-right">right content</div>
+  <div class="header-right"><MobileUserActions /></div>
 </header>
 
 <style>
   header {
-    padding: var(--spacing-6) var(--spacing-10);
+    padding: var(--spacing-4) var(--spacing-6);
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid var(--border-primary);
   }

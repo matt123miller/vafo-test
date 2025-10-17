@@ -1,0 +1,46 @@
+---
+import Icon from "./Icon.astro";
+
+interface Breadcrumb {
+  title: string;
+  url: string;
+}
+interface Props {
+  items: Breadcrumb[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="breadcrumbs">
+  {
+    items.map((item, index) => (
+      <>
+        {index > 0 && <Icon name="chevronRight" />}
+
+        <a href={item.url}>{item.title}</a>
+      </>
+    ))
+  }
+</div>
+
+<style>
+  .breadcrumbs {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-2) var(--spacing-6);
+    color: var(--text-minimal);
+    font-size: 0.7rem;
+  }
+
+  .breadcrumbs a {
+    text-decoration: none;
+  }
+
+  .breadcrumbs a:last-child {
+    color: var(--text-secondary);
+  }
+  .breadcrumbs a:hover {
+    text-decoration: underline;
+  }
+</style>
