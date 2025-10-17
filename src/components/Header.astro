@@ -1,0 +1,45 @@
+---
+import { Image } from "astro:assets";
+import Logo from "../assets/logo-full.png";
+---
+
+<header>
+  <div class="header-left">
+    left content
+    <!-- <nav>
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </nav> -->
+  </div>
+  <div class="header-center">
+    <Image
+      src={Logo}
+      alt="Pooch & Mutt logo, with a dogs face located centrally whose nose and mouth form the ampersand"
+    />
+  </div>
+  <div class="header-right">right content</div>
+</header>
+
+<style>
+  header {
+    padding: var(--spacing-6) var(--spacing-10);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-bottom: 1px solid var(--border-primary);
+  }
+  /* .header-left,
+  .header-right {
+    flex: 1;
+  }
+  .header-center {
+    flex: 0;
+  } */
+
+  .header-right {
+    text-align: right;
+  }
+</style>
