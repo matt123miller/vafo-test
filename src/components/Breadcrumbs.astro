@@ -15,11 +15,11 @@ const { items } = Astro.props;
 <div class="breadcrumbs">
   {
     items.map((item, index) => (
-      <>
+      <span class="breadcrumbs__item">
         {index > 0 && <Icon name="chevronRight" />}
 
         <a href={item.url}>{item.title}</a>
-      </>
+      </span>
     ))
   }
 </div>
@@ -37,10 +37,15 @@ const { items } = Astro.props;
     text-decoration: none;
   }
 
-  .breadcrumbs a:last-child {
-    color: var(--text-secondary);
-  }
   .breadcrumbs a:hover {
     text-decoration: underline;
+  }
+  .breadcrumbs__item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+  }
+  .breadcrumbs__item:last-child {
+    color: var(--text-secondary);
   }
 </style>
