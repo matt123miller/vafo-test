@@ -1,0 +1,44 @@
+---
+interface Props {
+  theme?: "primary" | "secondary";
+}
+
+const { theme } = Astro.props;
+
+const themes = {
+  primary: "primary",
+  secondary: "secondary",
+} as const;
+
+let chosenTheme = "primary";
+if (theme && typeof theme === "string") {
+  chosenTheme = themes[theme] || "primary";
+}
+---
+
+<button class=`button ${chosenTheme}`>
+  <slot />
+</button>
+
+<style>
+  .button {
+    padding-inline: var(--spacing-10);
+    padding-block: var(--spacing-7);
+    border-radius: var(--radius-medium);
+  }
+  .primary {
+    color: var(--neutral-0);
+    background-color: var(--neutral-1000);
+    border: 1px solid var(--neutral-1000);
+  }
+  .secondary {
+    color: var(--text-base);
+    background-color: var(--surface-secondary);
+    border: 1px solid var(--border-secondary);
+  }
+
+  /* TODO: add focus and disabled styles */
+  .primary:hover {
+    background-color: var(--surface-secondary);
+  }
+</style>
