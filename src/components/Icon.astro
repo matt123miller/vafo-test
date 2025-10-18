@@ -29,10 +29,11 @@ const icons = {
 
 interface Props {
   name: keyof typeof icons;
+  class?: string;
 }
 
-const { name } = Astro.props;
+const { name, class: className, ...rest } = Astro.props;
 const iconSrc = icons[name];
 ---
 
-<Image src={iconSrc} alt={name} />
+<Image class={className} src={iconSrc} alt={name} {...rest} />
