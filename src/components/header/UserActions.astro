@@ -1,0 +1,29 @@
+---
+import Icon from "../Icon.astro";
+---
+
+<div class="useractions">
+  <Icon name="search" class="useractions__search" />
+  <Icon name="user" class="useractions__user" />
+  <Icon name="cart" class="useractions__cart" />
+</div>
+
+<style>
+  .useractions {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: var(--spacing-4);
+  }
+  .useractions__search,
+  .useractions__user {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .useractions__search,
+    .useractions__user {
+      display: block;
+    }
+  }
+</style>

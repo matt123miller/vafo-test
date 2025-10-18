@@ -1,0 +1,71 @@
+---
+import Icon from "../Icon.astro";
+---
+
+<vafo-nav>
+  <Icon class="nav__menu-icon" name="menu" />
+  <nav class="nav">
+    <ul>
+      <li><a class="nav__link p2" href="#">Shop</a></li>
+      <li><a class="nav__link p2" href="#">Find your food</a></li>
+      <li><a class="nav__link p2" href="#">About</a></li>
+      <li><a class="nav__link p2" href="#">Blog</a></li>
+    </ul>
+  </nav>
+</vafo-nav>
+
+<style>
+  .nav {
+    display: none;
+  }
+
+  .nav ul {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-6);
+  }
+  .nav.open {
+    /* Change the layout of everything */
+  }
+  @media (min-width: 768px) {
+    .nav {
+      display: block;
+    }
+    .nav__menu-icon {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  class VafoNav extends HTMLElement {
+    nav: HTMLElement;
+
+    constructor() {
+      super();
+      this.toggleMenu = this.toggleMenu.bind(this);
+      this.nav = this.querySelector("nav") as HTMLElement;
+    }
+
+    connectedCallback() {
+      this.querySelector(".menu-icon")!.addEventListener(
+        "click",
+        this.toggleMenu
+      );
+    }
+
+    disconnectedCallback() {
+      this.querySelector(".menu-icon")!.removeEventListener(
+        "click",
+        this.toggleMenu
+      );
+    }
+
+    toggleMenu() {
+      this.nav.classList.toggle("open");
+    }
+  }
+
+  window.customElements.define("vafo-nav", VafoNav);
+</script>
