@@ -122,6 +122,8 @@ a {
   --radius-large: var(--spacing-7);
   --radius-full: 9999px;
 
+  --breakpoint-md: 768px;
+
   /* Theme variables */
   --text-primary: var(--neutral-100);
   --text-secondary: var(--neutral-700);
@@ -139,10 +141,78 @@ a {
   --border-secondary: var(--black-30);
   --border-minimal: var(--black-15);
   --border-invert: var(--neutral-0);
+
+  --text-c1: 10px;
+  --text-p1: 18px;
+  --text-p2: 16px;
+  --text-s1: 18px;
+  --text-s2: 16px;
+  --text-h1: 32px;
+  --text-h2: 26px;
+  --text-h3: 22px;
+  --text-display: 38px;
 }
+
 body {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
   font-family: "Poppins", Arial, sans-serif;
+  font-size: var(--text-p2);
+  letter-spacing: 0px;
+}
+
+.display {
+  font-size: var(--text-display);
+  font-weight: bold;
+  line-height: 48px;
+}
+
+h1,
+.h1 {
+  font-size: var(--text-h1);
+  font-weight: bold;
+  line-height: 38px;
+}
+
+h2,
+.h2 {
+  font-size: var(--text-h2);
+  font-weight: bold;
+  line-height: 32px;
+}
+
+h3,
+.h3 {
+  font-size: var(--text-h3);
+  font-weight: bold;
+  line-height: 28px;
+}
+
+.s1 {
+  font-size: var(--text-s1);
+  font-weight: normal;
+  line-height: 26px;
+}
+
+.s2 {
+  font-size: var(--text-s2);
+  font-weight: normal;
+  line-height: 24px;
+}
+
+p,
+.p1 {
+  font-size: var(--text-p1);
+  line-height: 26px;
+  font-weight: light;
+}
+
+.p2 {
+  font-size: var(--text-p2);
+  line-height: 24px;
+  font-weight: light;
+}
+
+.c1 {
+  font-size: var(--text-c1);
+  line-height: 14px;
+  font-weight: light;
 }
