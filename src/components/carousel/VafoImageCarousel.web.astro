@@ -1,0 +1,53 @@
+---
+type ImageInput = string | { src: string; alt?: string; href?: string };
+type ImageItem = { src: string; alt?: string; href?: string };
+---
+
+<template>
+  <vafo-image-carousel images={Astro.props.images} index={Astro.props.index}>
+    <img src={Astro.props.images[0]} alt="" />
+  </vafo-image-carousel>
+</template>
+
+<style>
+  :host {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  img {
+    height: 375px;
+  }
+</style>
+
+<script>
+  export class VafoImageCarousel extends HTMLElement {
+    constructor() {
+      super();
+      // const template = this.querySelector("template");
+      // const shadow = this.attachShadow({ mode: "open" });
+      // shadow.appendChild(template!.content.cloneNode(true));
+    }
+
+    connectedCallback() {
+      console.log("VafoImageCarousel connected");
+      console.log(this.images);
+    }
+
+    static get observedAttributes() {
+      return ["images", "index"];
+    }
+
+    get images() {
+      const imagesAttr = this.getAttribute("images");
+
+      console.log(imagesAttr);
+      return imagesAttr ? JSON.parse(imagesAttr) : [];
+    }
+  }
+
+  if (!customElements.get("vafo-image-carousel")) {
+    customElements.define("vafo-image-carousel", VafoImageCarousel);
+  }
+</script>

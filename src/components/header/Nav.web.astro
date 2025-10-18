@@ -49,14 +49,14 @@ import Icon from "../Icon.astro";
     }
 
     connectedCallback() {
-      this.querySelector(".menu-icon")!.addEventListener(
+      this.querySelector(".nav__menu-icon")!.addEventListener(
         "click",
         this.toggleMenu
       );
     }
 
     disconnectedCallback() {
-      this.querySelector(".menu-icon")!.removeEventListener(
+      this.querySelector(".nav__menu-icon")!.removeEventListener(
         "click",
         this.toggleMenu
       );
@@ -66,6 +66,7 @@ import Icon from "../Icon.astro";
       this.nav.classList.toggle("open");
     }
   }
-
-  window.customElements.define("vafo-nav", VafoNav);
+  if (!customElements.get("vafo-nav")) {
+    window.customElements.define("vafo-nav", VafoNav);
+  }
 </script>
