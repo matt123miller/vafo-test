@@ -125,7 +125,7 @@ a {
   --breakpoint-md: 768px;
 
   /* Theme variables */
-  --text-primary: var(--neutral-100);
+  --text-primary: var(--neutral-1000);
   --text-secondary: var(--neutral-700);
   --text-minimal: var(--neutral-400);
   --text-disabled: var(--neutral-150);

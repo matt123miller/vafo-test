@@ -1,0 +1,153 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  product: {
+    name: string;
+    price: number;
+    images: string[];
+  };
+}
+---
+
+<vafo-product-details {...Astro.props}>
+  <div class="product-details">
+    <h2>{Astro.props.product.name}</h2>
+    <h3 class="product-details__price">
+      £{Astro.props.product.price.toFixed(2)}
+      <span class="product-details__points"> +8 PoochPoints</span>
+    </h3>
+    <div class="product-details__quantity">
+      <label for="quantity" id="quantity" class="s2">Quantity</label><select
+        name="quantity"
+        id="quantity"
+      >
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+    </div>
+    <div class="product-details__subscribe-cta">
+      <p class="s1">Subscribe & Save 25%!</p>
+      <div class="product-details__subscription-type">
+        <div class="product-details__subscription-type-box">
+          <label class="s2" for="subscribe-radio">Subscription</label>
+          <input
+            type="radio"
+            name="subscription"
+            value="subscribe"
+            id="subscribe-radio"
+          />
+        </div>
+        <div class="product-details__subscription-type-box">
+          <label for="one-off-radio">One-off</label>
+          <input
+            type="radio"
+            name="subscription"
+            value="one-off"
+            id="one-off-radio"
+          />
+        </div>
+      </div>
+      <p class="s1">Delivery Frequency</p>
+      <select name="delivery-frequency" id="delivery-frequency">
+        <option value="30-days">30 days</option>
+        <option value="14-days">14 days</option>
+        <option value="7-days">7 days</option>
+      </select>
+    </div>
+    <div class="p2 product-details__description">
+      <p>Grain-free, junk-free complete dry food for sensitive dogs</p>
+      <ul>
+        <li>Hypoallergenic</li>
+        <li>Vet recommended</li>
+        <li>Prebiotics for gut health</li>
+      </ul>
+    </div>
+  </div>
+</vafo-product-details>
+
+<style>
+  .product-details {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-6);
+    padding: var(--spacing-6);
+  }
+  .product-details label {
+  }
+  .product-details select {
+    /* TODO: style the handle */
+    margin-top: var(--spacing-4);
+    width: 100%;
+    padding: var(--spacing-4) var(--spacing-6);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-medium);
+  }
+  .product-details__price {
+  }
+  .product-details__points {
+    color: var(--text-brand);
+  }
+
+  .product-details__subscribe-cta {
+    padding: var(--spacing-6);
+    border-radius: var(--radius-medium);
+    border: 1px solid var(--border-minimal);
+    background-color: var(--surface-brand);
+  }
+  .product-details__subscription-type {
+    /* display: flex;
+
+    align-items: center; */
+    gap: var(--spacing-6);
+    margin-top: var(--spacing-4);
+    margin-bottom: var(--spacing-6);
+  }
+
+  .product-details__subscription-type-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: var(--surface-brand);
+    color: var(--text-minimal);
+    border: 1px solid var(--border-secondary);
+    border-radius: var(--radius-medium);
+    padding: var(--spacing-5);
+    margin-bottom: var(--spacing-3);
+  }
+  .product-details__subscription-type-box:has(input[type="radio"]:checked) {
+    background-color: var(--surface-primary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-primary);
+  }
+  .product-details__description {
+    color: var(--text-secondary);
+  }
+  .product-details__description ul {
+    padding-left: var(--spacing-6);
+  }
+</style>
+
+<script>
+  // web component that uses the template above
+
+  class VafoProductDetails extends HTMLElement {
+    constructor() {
+      super();
+      // const template = this.querySelector("template");
+      // const shadow = this.attachShadow({ mode: "open" });
+      // shadow.appendChild(template!.content.cloneNode(true));
+    }
+  }
+
+  const isSubscribed = () => {
+    return false;
+  };
+
+  if (!window.customElements.get("vafo-product-details")) {
+    window.customElements.define("vafo-product-details", VafoProductDetails);
+  }
+</script>
