@@ -1,0 +1,61 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  product: {
+    name: string;
+    description: string;
+    price: number;
+    images: string[];
+  };
+}
+---
+
+<style is:global>
+  .product-details {
+    background-color: var(--surface-brand);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-8);
+  }
+  .product-details .images {
+    display: flex;
+    gap: var(--spacing-4);
+  }
+  .product-details .price {
+    font-weight: bold;
+    font-size: 1.25rem;
+  }
+</style>
+
+<vafo-product-details {...Astro.props}>
+  <template>
+    <div class="product-details">
+      <h1>{Astro.props.product.name}</h1>
+      <p>{Astro.props.product.description}</p>
+      <p class="price">${Astro.props.product.price.toFixed(2)}</p>
+      <div class="images">
+        {
+          Astro.props.product.images.map((src) => (
+            <img src={src} alt={Astro.props.product.name} />
+          ))
+        }
+      </div>
+    </div>
+  </template>
+</vafo-product-details>
+
+<script>
+  // web component that uses the template above
+
+  class VafoProductDetails extends HTMLElement {
+    constructor() {
+      super();
+      const template = this.querySelector("template");
+      const shadow = this.attachShadow({ mode: "open" });
+      shadow.appendChild(template!.content.cloneNode(true));
+    }
+  }
+
+  window.customElements.define("vafo-product-details", VafoProductDetails);
+</script>
