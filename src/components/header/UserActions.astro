@@ -2,27 +2,26 @@
 import Icon from "../Icon.astro";
 ---
 
-<div class="useractions">
-  <Icon name="search" class="useractions__search" />
-  <Icon name="user" class="useractions__user" />
-  <Icon name="cart" class="useractions__cart" />
+<div class="user-actions">
+  <Icon name="search" class="user-actions__search" />
+  <Icon name="user" class="user-actions__user" />
+  <Icon name="cart" class="user-actions__cart" />
 </div>
 
 <style>
-  .useractions {
+  .user-actions {
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
     gap: var(--spacing-4);
   }
-  .useractions__search,
-  .useractions__user {
+  .user-actions__search,
+  .user-actions__user {
     display: none;
   }
 
   @media (min-width: 768px) {
-    .useractions__search,
-    .useractions__user {
+    .user-actions__search,
+    .user-actions__user {
       display: block;
     }
   }

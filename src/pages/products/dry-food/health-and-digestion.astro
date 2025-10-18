@@ -1,0 +1,22 @@
+---
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import ProductLayout from "@/layouts/ProductLayout.astro";
+
+const breadcrumbs = [
+  { title: "Shop all", url: "/products" },
+  { title: "Dry Dog Food", url: "/products/dry-food" },
+  {
+    title: "Health & Digestion Dry Food",
+    url: "/products/dry-food/health-and-digestion",
+  },
+];
+---
+
+<ProductLayout>
+  <Breadcrumbs items={breadcrumbs} />
+</ProductLayout>
+
+<style>
+  .product-layout {
+  }
+</style>
