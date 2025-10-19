@@ -123,7 +123,21 @@ a {
   --radius-large: var(--spacing-7);
   --radius-full: 9999px;
 
+  /* Responsive grid helpers */
+  /* Mobile, this is the minimum size and I shouldn't need media queries to check for this size */
+  --breakpoint-sm: 375px;
+  /* Media query for tablet and above */
   --breakpoint-md: 768px;
+  /* Media query for desktop and above */
+  --breakpoint-lg: 1360px;
+
+  /* 
+  Gutter actually starts as 0, only increasing on larger sizes, 
+  otherwise it causes layout issues. 
+  */
+  --grid-gutter: var(--spacing-0);
+  --grid-margin: var(--spacing-6);
+  --grid-columns: repeat(6, 1fr);
 
   /* Theme variables */
   --text-primary: var(--neutral-1000);
@@ -154,6 +168,24 @@ a {
   --text-display: 38px;
 }
 
+/* Grid */
+
+@media (min-width: 768px) {
+  main {
+    --grid-gutter: var(--spacing-8);
+    --grid-margin: var(--spacing-9);
+    --grid-columns: repeat(6, 1fr);
+  }
+}
+@media (min-width: 1360px) {
+  main {
+    --grid-gutter: var(--spacing-10);
+    --grid-margin: var(--spacing-10);
+    --grid-columns: repeat(12, 1fr);
+  }
+}
+
+/* Typography Styles */
 body {
   font-family: "Poppins", Arial, sans-serif;
   font-size: var(--text-p2);
@@ -216,4 +248,12 @@ p,
   font-size: var(--text-c1);
   line-height: 14px;
   font-weight: light;
+}
+
+/* Utility Classes */
+.full-bleed {
+  grid-column: 1 / -1;
+  margin-inline: -12px;
+  padding-inline: 0;
+  width: calc(100% + 24px);
 }

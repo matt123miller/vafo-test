@@ -1,4 +1,6 @@
 ---
+import Button from "./Button.astro";
+
 interface Props {
   product: {
     name: string;
@@ -56,6 +58,11 @@ interface Props {
         <option value="7-days">7 days</option>
       </select>
     </div>
+    <div class="product-details__add-to-cart">
+      <Button theme="primary" class="product-details__add-to-cart-button">
+        Add to Cart
+      </Button>
+    </div>
     <div class="p2 product-details__description">
       <p>Grain-free, junk-free complete dry food for sensitive dogs</p>
       <ul>
@@ -72,7 +79,7 @@ interface Props {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-6);
-    padding: var(--spacing-6);
+    padding: var(--spacing-6) 0;
   }
   .product-details label {
   }
@@ -117,11 +124,25 @@ interface Props {
     color: var(--text-primary);
     border: 1px solid var(--border-primary);
   }
+
+  .product-details__add-to-cart {
+    display: none;
+  }
+  .product-details__add-to-cart-button {
+    width: 100%;
+  }
+
   .product-details__description {
     color: var(--text-minimal);
   }
   .product-details__description ul {
     padding-left: var(--spacing-6);
+  }
+
+  @media (min-width: 1360px) {
+    .product-details__add-to-cart {
+      display: block;
+    }
   }
 </style>
 

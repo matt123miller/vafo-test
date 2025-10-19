@@ -27,8 +27,9 @@ const breadcrumbs = [
             "/image-packaging.png",
             "/image-ingredients.png",
             "/image-kibble.png",
-            "/image-packaging-small.png",
-          ].map((src) => <img src={src} alt="Product image" />)
+          ].map((src, i) => (
+            <img src={src} alt="Product image" data-index={i} />
+          ))
         }
       </VafoImageCarousel>
     </div>
@@ -49,22 +50,63 @@ const breadcrumbs = [
 </ProductLayout>
 
 <style>
+  .breadcrumbs {
+    grid-area: breadcrumbs;
+  }
+
+  .images {
+    grid-area: images;
+  }
+
+  .details {
+    grid-area: details;
+  }
+
+  .add-to-cart {
+    grid-area: add-to-cart;
+  }
+
   .product-layout {
-    --gutter: var(--spacing-0);
-    --columns: repeat(6, 1fr);
   }
   .product-layout {
     display: grid;
-    grid-template-columns: var(--columns);
-    gap: var(--gutter);
+    grid-template-columns: var(--grid-columns);
+    column-gap: var(--grid-gutter);
+    padding-inline: var(--grid-margin);
+
+    grid-auto-flow: row;
+    grid-template-areas:
+      "breadcrumbs breadcrumbs breadcrumbs breadcrumbs breadcrumbs breadcrumbs"
+      "images images images images images images"
+      "details details details details details details";
   }
 
-  .product-layout .product-layout__breadcrumbs,
-  .product-layout .product-layout__images,
-  .product-layout .product-layout__form,
-  .product-layout .product-layout__add-to-cart {
+  .product-layout__breadcrumbs,
+  .product-layout__images,
+  .product-layout__form,
+  .product-layout__add-to-cart {
     grid-column: 1 / -1;
   }
+
+  .product-layout__breadcrumbs {
+    grid-area: breadcrumbs;
+  }
+
+  .product-layout__images {
+    grid-area: images;
+
+    margin-inline: calc(-1 * var(--spacing-6));
+    width: calc(100% + var(--spacing-8));
+  }
+
+  .product-layout__form {
+    grid-area: details;
+  }
+
+  .product-layout__add-to-cart {
+    grid-area: add-to-cart;
+  }
+
   .product-layout__form {
     display: static;
   }
@@ -78,12 +120,16 @@ const breadcrumbs = [
     box-shadow: 0 -4px 12px var(--black-15);
     background-color: var(--surface-primary);
     z-index: 10;
+
+    grid-column: 1 / -1;
+    margin-inline: calc(-1 * var(--spacing-6));
+    width: calc(100% + var(--spacing-9));
   }
   .product-layout__add-to-cart-button {
     width: 100%;
   }
 
-  @media (min-width: 768px) {
+  /* @media (min-width: 768px) {
     .product-layout__form {
       padding-bottom: 0;
     }
@@ -91,5 +137,34 @@ const breadcrumbs = [
     .product-layout__add-to-cart {
       position: static;
     }
+  } */
+
+  @media (min-width: 1360px) {
+    .product-layout {
+      grid-template-columns: 6fr 3fr;
+      grid-template-rows: 30px 1fr;
+      grid-auto-flow: row;
+      grid-template-areas:
+        "images breadcrumbs"
+        "images details";
+    }
+
+    .product-layout__add-to-cart {
+      display: none;
+    }
+    .product-layout__images {
+      margin-inline: 0;
+      width: 100%;
+    }
+    /* 
+    .product-layout__breadcrumbs {
+      grid-column: 1 / 12;
+    }
+    .product-layout__images {
+      grid-column: 2 / 7;
+    }
+    .product-layout__form {
+      grid-column: 7 / -2;
+    } */
   }
 </style>
