@@ -1,7 +1,14 @@
 ---
+import ImageIngredients from "@/assets/image-ingredients.png";
+import ImageKibble from "@/assets/image-kibble.png";
+import ImagePackagingSmall from "@/assets/image-packaging-small.png";
+import ImagePackagingMain from "@/assets/image-packaging.png";
+
 import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import Button from "@/components/Button.astro";
+import VafoImageCarousel from "@/components/carousel/VafoImageCarousel.web.astro";
+import ProductDetails from "@/components/ProductDetails.web.astro";
 import ProductLayout from "@/layouts/ProductLayout.astro";
-import ProductDetails from "./ProductDetails.astro";
 
 const breadcrumbs = [
   { title: "Shop all", url: "/products" },
@@ -23,18 +30,33 @@ const breadcrumbs = [
       ImageIngredients,
     ]}
   />
-  <ProductDetails
-    product={{
-      name: "Health & Digestion Dry Food",
-      description:
-        "A premium dry food formulated to support your dog's digestive health.",
-      price: 49.99,
-      images: ["/images/products/dry-food/health-and-digestion.jpg"],
-    }}
-  />
+  <form action="">
+    <ProductDetails
+      product={{
+        name: "Health & Digestion Dry Food",
+        price: 8.49,
+        images: ["/images/products/dry-food/health-and-digestion.jpg"],
+      }}
+    />
+    <div class="product-layout__add-to-cart">
+      <Button theme="primary" class="product-layout__add-to-cart-button">
+        Add to Cart
+      </Button>
+    </div>
+  </form>
 </ProductLayout>
 
 <style>
   .product-layout {
+  }
+
+  .product-layout__add-to-cart {
+    padding: var(--spacing-6);
+    border-radius: var(--radius-medium);
+    border-top: 1px solid var(--border-secondary);
+    box-shadow: 0 -4px 12px var(--black-15);
+  }
+  .product-layout__add-to-cart-button {
+    width: 100%;
   }
 </style>

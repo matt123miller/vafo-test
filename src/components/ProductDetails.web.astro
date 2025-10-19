@@ -1,5 +1,6 @@
 ---
 import { Image } from "astro:assets";
+import Button from "./Button.astro";
 
 interface Props {
   product: {
@@ -38,6 +39,7 @@ interface Props {
             type="radio"
             name="subscription"
             value="subscribe"
+            checked
             id="subscribe-radio"
           />
         </div>
