@@ -3,11 +3,9 @@ type ImageInput = string | { src: string; alt?: string; href?: string };
 type ImageItem = { src: string; alt?: string; href?: string };
 ---
 
-<template>
-  <vafo-image-carousel images={Astro.props.images} index={Astro.props.index}>
-    <img src={Astro.props.images[0]} alt="" />
-  </vafo-image-carousel>
-</template>
+<vafo-image-carousel images={Astro.props.images} index={Astro.props.index}>
+  <img src={Astro.props.images[0]} alt="" />
+</vafo-image-carousel>
 
 <style>
   :host {
