@@ -1,5 +1,7 @@
 # Vafo Digital Test
 
+View on github pages [https://matt123miller.github.io/vafo-test/](https://matt123miller.github.io/vafo-test/)
+
 Started with:
 
 ```sh
