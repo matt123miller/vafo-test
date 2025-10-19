@@ -30,7 +30,7 @@ const breadcrumbs = [
       ImageIngredients,
     ]}
   />
-  <form action="">
+  <form action="" class="product-layout__form">
     <ProductDetails
       product={{
         name: "Health & Digestion Dry Food",
@@ -47,16 +47,30 @@ const breadcrumbs = [
 </ProductLayout>
 
 <style>
-  .product-layout {
+  .product-layout__form {
   }
 
   .product-layout__add-to-cart {
+    position: sticky;
+    bottom: 0;
     padding: var(--spacing-6);
-    border-radius: var(--radius-medium);
+    border-radius: var(--radius-medium) var(--radius-medium) 0 0;
     border-top: 1px solid var(--border-secondary);
     box-shadow: 0 -4px 12px var(--black-15);
+    background-color: var(--surface-primary);
+    z-index: 10;
   }
   .product-layout__add-to-cart-button {
     width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    .product-layout__form {
+      padding-bottom: 0;
+    }
+
+    .product-layout__add-to-cart {
+      position: static;
+    }
   }
 </style>
