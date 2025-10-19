@@ -1,31 +1,55 @@
----
-type ImageInput = string | { src: string; alt?: string; href?: string };
-type ImageItem = { src: string; alt?: string; href?: string };
----
-
-<vafo-image-carousel images={Astro.props.images} index={Astro.props.index}>
-  <img src={Astro.props.images[0]} alt="" />
+<vafo-image-carousel {...Astro.props}>
+  <div class="vafo-carousel__container">
+    <button class="vafo-carousel__prev">Prev</button>
+    <div class="vafo-carousel__images">
+      <slot />
+    </div>
+    <button class="vafo-carousel__next">Next</button>
+  </div>
 </vafo-image-carousel>
-
 <style>
   :host {
-    display: block;
-    width: 100%;
-    height: auto;
+    --image-size: 375px;
   }
 
-  img {
-    height: 375px;
+  .vafo-carousel__container {
+    display: block;
+    height: var(--image-size);
+  }
+
+  .vafo-carousel__images {
+    display: flex;
+    flex-shrink: 1;
+    overflow: scroll;
+    height: var(--image-size);
   }
 </style>
-
 <script>
   export class VafoImageCarousel extends HTMLElement {
+    container: HTMLDivElement;
+    scrollOffset: number = 375;
+
     constructor() {
       super();
-      // const template = this.querySelector("template");
-      // const shadow = this.attachShadow({ mode: "open" });
-      // shadow.appendChild(template!.content.cloneNode(true));
+
+      this.container = this.querySelector(".vafo-carousel__container")!;
+      console.log(this.container);
+
+      this.container.addEventListener("click", () => {
+        console.log("container clicked");
+      });
+
+      const images = this.container.querySelector(".vafo-carousel__images")!;
+      const prev = this.container.querySelector(".vafo-carousel__prev")!;
+      const next = this.container.querySelector(".vafo-carousel__next")!;
+
+      prev.addEventListener("click", () => {
+        images.scrollLeft -= this.scrollOffset;
+      });
+
+      next.addEventListener("click", () => {
+        images.scrollLeft += this.scrollOffset;
+      });
     }
 
     connectedCallback() {
@@ -39,9 +63,7 @@ type ImageItem = { src: string; alt?: string; href?: string };
 
     get images() {
       const imagesAttr = this.getAttribute("images");
-
-      console.log(imagesAttr);
-      return imagesAttr ? JSON.parse(imagesAttr) : [];
+      return imagesAttr ? imagesAttr.split(",") : [];
     }
   }
 

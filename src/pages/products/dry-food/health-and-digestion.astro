@@ -17,14 +17,16 @@ const breadcrumbs = [
 
 <ProductLayout>
   <Breadcrumbs items={breadcrumbs} />
-  <VafoImageCarousel
-    images={[
-      "/image-packaging.png",
-      "/image-ingredients.png",
-      "/image-kibble.png",
-      "/image-packaging-small.png",
-    ]}
-  />
+  <VafoImageCarousel>
+    {
+      [
+        "/image-packaging.png",
+        "/image-ingredients.png",
+        "/image-kibble.png",
+        "/image-packaging-small.png",
+      ].map((src) => <img src={src} alt="Product image" />)
+    }
+  </VafoImageCarousel>
   <form action="" class="product-layout__form">
     <ProductDetails
       product={{
