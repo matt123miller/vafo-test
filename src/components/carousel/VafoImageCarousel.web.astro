@@ -1,11 +1,11 @@
 <vafo-image-carousel {...Astro.props}>
   <div class="vafo-carousel__container">
-    <button class="vafo-carousel__prev">Prev</button>
     <div class="vafo-carousel__images">
       <slot />
     </div>
-    <button class="vafo-carousel__next">Next</button>
-    <div class="vafo-carousel__image-selector"></div>
+    <div class="vafo-carousel__main-image">
+      <!-- Selected image will be displayed here -->
+    </div>
   </div>
 </vafo-image-carousel>
 <style>
@@ -17,10 +17,12 @@
     display: block;
     height: var(--image-size);
     width: 100%;
+    padding-inline: calc(-1 * var(--spacing-6));
   }
 
   .vafo-carousel__images {
     display: flex;
+    gap: var(--spacing-6);
     overflow: scroll;
     scroll-snap-type: x mandatory;
   }
@@ -31,88 +33,122 @@
     object-fit: cover;
     scroll-snap-align: center;
   }
+
+  .vafo-carousel__main-image {
+    display: none;
+  }
+
+  @media (min-width: 1360px) {
+    .vafo-carousel__container {
+      --image-size: 140px;
+      display: grid;
+      width: 100%;
+      height: 100%;
+      padding-inline: unset;
+      grid-template-columns: var(--image-size) 1fr;
+      gap: var(--spacing-6);
+      grid-template-areas: "thumbs mainimage";
+    }
+    .vafo-carousel__images {
+      display: flex;
+      grid-area: thumbs;
+      flex-direction: column;
+      gap: var(--spacing-4);
+      height: 100%;
+      border-radius: var(--radius-medium);
+      scroll-snap-type: none;
+    }
+    .vafo-carousel__main-image {
+      display: block;
+      grid-area: mainimage;
+    }
+
+    .vafo-carousel__main-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: var(--radius-medium);
+    }
+
+    .vafo-carousel__container {
+    }
+
+    .vafo-carousel__images {
+      display: flex;
+      gap: var(--spacing-6);
+      overflow: scroll;
+      scroll-snap-type: x mandatory;
+    }
+
+    :global(.vafo-carousel__images img) {
+      width: var(--image-size);
+      height: var(--image-size);
+      object-fit: cover;
+      scroll-snap-align: center;
+    }
+
+    .vafo-carousel__main-image {
+      display: block;
+    }
+  }
 </style>
+
 <script>
   export class VafoImageCarousel extends HTMLElement {
     container: HTMLDivElement;
     imagesContainer: HTMLDivElement;
-    prevButton: HTMLButtonElement;
-    nextButton: HTMLButtonElement;
-    imageSelector: HTMLDivElement;
-
-    scrollOffset: number = 375;
+    mainImageContainer: HTMLDivElement;
 
     constructor() {
       super();
 
+      // Cache relevant elements
       this.container = this.querySelector(".vafo-carousel__container")!;
-      this.container.addEventListener("click", () => {
-        console.log("container clicked");
-      });
-
       this.imagesContainer = this.container.querySelector(
         ".vafo-carousel__images"
       )!;
-      this.prevButton = this.container.querySelector(".vafo-carousel__prev")!;
-      this.nextButton = this.container.querySelector(".vafo-carousel__next")!;
-      this.imageSelector = this.container.querySelector(
-        ".vafo-carousel__image-selector"
+      this.mainImageContainer = this.container.querySelector(
+        ".vafo-carousel__main-image"
       )!;
 
-      this.imageSelector.innerHTML = Array.from(this.imagesContainer.children)
-        .map(
-          (_, index) =>
-            `<input type="radio" ${index === 0 ? "checked" : ""} 
-            class="vafo-carousel__image-selector-radio" 
-            name="image-selector" 
-            data-index="${index}" />`
-        )
-        .join("");
+      // Bind methods
+      this.selectImage = this.selectImage.bind(this);
+      this.handleImageClick = this.handleImageClick.bind(this);
     }
 
     connectedCallback() {
-      console.log("VafoImageCarousel connected");
-
-      this.nextButton.addEventListener("click", () => {
-        this.imagesContainer.scrollLeft += this.scrollOffset;
-      });
-      this.prevButton.addEventListener("click", () => {
-        this.imagesContainer.scrollLeft -= this.scrollOffset;
+      Array.from(this.imagesContainer.children).forEach((image: Element) => {
+        (image as HTMLImageElement).addEventListener(
+          "click",
+          this.handleImageClick
+        );
       });
 
-      this.imageSelector.addEventListener("change", (event) => {
-        const target = event.target as HTMLInputElement;
-        if (target && target.dataset.index) {
-          const index = parseInt(target.dataset.index);
-          this.selectImage(index);
-        }
-      });
+      const firstImage = this.imagesContainer.children[0] as HTMLImageElement;
+      this.mainImageContainer.innerHTML = `<img src='${firstImage.src}' alt='Main image' />`;
     }
 
     disconnectedCallback() {
-      console.log("VafoImageCarousel disconnected");
-      this.nextButton.removeEventListener("click", () => {
-        this.imagesContainer.scrollLeft += this.scrollOffset;
+      Array.from(this.imagesContainer.children).forEach((image: Element) => {
+        (image as HTMLImageElement).removeEventListener(
+          "click",
+          this.handleImageClick
+        );
       });
-      this.prevButton.removeEventListener("click", () => {
-        this.imagesContainer.scrollLeft -= this.scrollOffset;
-      });
     }
 
-    static get observedAttributes() {
-      return ["images", "index"];
+    handleImageClick(event: PointerEvent) {
+      const target = event.currentTarget as HTMLImageElement;
+      const index = Number(target.getAttribute("data-index"));
+      const selectedImage = this.imagesContainer.children[
+        index
+      ] as HTMLImageElement;
+
+      this.selectImage(selectedImage);
     }
 
-    get images() {
-      const imagesAttr = this.getAttribute("images");
-      return imagesAttr ? imagesAttr.split(",") : [];
-    }
-
-    selectImage(index: number) {
-      console.log(index);
-
-      const offset = index * this.scrollOffset;
-      this.imagesContainer.scrollLeft = offset;
+    selectImage(selectedImage: HTMLImageElement) {
+      this.mainImageContainer.innerHTML = `<img src='${selectedImage.src}' alt='Main image' />`;
     }
   }
 
