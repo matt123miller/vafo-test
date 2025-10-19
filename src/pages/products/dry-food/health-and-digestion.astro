@@ -16,34 +16,57 @@ const breadcrumbs = [
 ---
 
 <ProductLayout>
-  <Breadcrumbs items={breadcrumbs} />
-  <VafoImageCarousel>
-    {
-      [
-        "/image-packaging.png",
-        "/image-ingredients.png",
-        "/image-kibble.png",
-        "/image-packaging-small.png",
-      ].map((src) => <img src={src} alt="Product image" />)
-    }
-  </VafoImageCarousel>
-  <form action="" class="product-layout__form">
-    <ProductDetails
-      product={{
-        name: "Health & Digestion Dry Food",
-        price: 8.49,
-      }}
-    />
-    <div class="product-layout__add-to-cart">
-      <Button theme="primary" class="product-layout__add-to-cart-button">
-        Add to Cart
-      </Button>
+  <div class="product-layout">
+    <div class="product-layout__breadcrumbs">
+      <Breadcrumbs items={breadcrumbs} />
     </div>
-  </form>
+    <div class="product-layout__images">
+      <VafoImageCarousel>
+        {
+          [
+            "/image-packaging.png",
+            "/image-ingredients.png",
+            "/image-kibble.png",
+            "/image-packaging-small.png",
+          ].map((src) => <img src={src} alt="Product image" />)
+        }
+      </VafoImageCarousel>
+    </div>
+    <form class="product-layout__form">
+      <ProductDetails
+        product={{
+          name: "Health & Digestion Dry Food",
+          price: 8.49,
+        }}
+      />
+      <div class="product-layout__add-to-cart">
+        <Button theme="primary" class="product-layout__add-to-cart-button">
+          Add to Cart
+        </Button>
+      </div>
+    </form>
+  </div>
 </ProductLayout>
 
 <style>
+  .product-layout {
+    --gutter: var(--spacing-0);
+    --columns: repeat(6, 1fr);
+  }
+  .product-layout {
+    display: grid;
+    grid-template-columns: var(--columns);
+    gap: var(--gutter);
+  }
+
+  .product-layout .product-layout__breadcrumbs,
+  .product-layout .product-layout__images,
+  .product-layout .product-layout__form,
+  .product-layout .product-layout__add-to-cart {
+    grid-column: 1 / -1;
+  }
   .product-layout__form {
+    display: static;
   }
 
   .product-layout__add-to-cart {
