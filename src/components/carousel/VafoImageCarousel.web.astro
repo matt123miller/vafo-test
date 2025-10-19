@@ -5,56 +5,98 @@
       <slot />
     </div>
     <button class="vafo-carousel__next">Next</button>
+    <div class="vafo-carousel__image-selector"></div>
   </div>
 </vafo-image-carousel>
 <style>
   :host {
-    --image-size: 375px;
   }
 
   .vafo-carousel__container {
+    --image-size: 375px;
     display: block;
     height: var(--image-size);
+    width: 100%;
   }
 
   .vafo-carousel__images {
     display: flex;
-    flex-shrink: 1;
     overflow: scroll;
+    scroll-snap-type: x mandatory;
+  }
+
+  :global(.vafo-carousel__images img) {
+    width: var(--image-size);
     height: var(--image-size);
+    object-fit: cover;
+    scroll-snap-align: center;
   }
 </style>
 <script>
   export class VafoImageCarousel extends HTMLElement {
     container: HTMLDivElement;
+    imagesContainer: HTMLDivElement;
+    prevButton: HTMLButtonElement;
+    nextButton: HTMLButtonElement;
+    imageSelector: HTMLDivElement;
+
     scrollOffset: number = 375;
 
     constructor() {
       super();
 
       this.container = this.querySelector(".vafo-carousel__container")!;
-      console.log(this.container);
-
       this.container.addEventListener("click", () => {
         console.log("container clicked");
       });
 
-      const images = this.container.querySelector(".vafo-carousel__images")!;
-      const prev = this.container.querySelector(".vafo-carousel__prev")!;
-      const next = this.container.querySelector(".vafo-carousel__next")!;
+      this.imagesContainer = this.container.querySelector(
+        ".vafo-carousel__images"
+      )!;
+      this.prevButton = this.container.querySelector(".vafo-carousel__prev")!;
+      this.nextButton = this.container.querySelector(".vafo-carousel__next")!;
+      this.imageSelector = this.container.querySelector(
+        ".vafo-carousel__image-selector"
+      )!;
 
-      prev.addEventListener("click", () => {
-        images.scrollLeft -= this.scrollOffset;
-      });
-
-      next.addEventListener("click", () => {
-        images.scrollLeft += this.scrollOffset;
-      });
+      this.imageSelector.innerHTML = Array.from(this.imagesContainer.children)
+        .map(
+          (_, index) =>
+            `<input type="radio" ${index === 0 ? "checked" : ""} 
+            class="vafo-carousel__image-selector-radio" 
+            name="image-selector" 
+            data-index="${index}" />`
+        )
+        .join("");
     }
 
     connectedCallback() {
       console.log("VafoImageCarousel connected");
-      console.log(this.images);
+
+      this.nextButton.addEventListener("click", () => {
+        this.imagesContainer.scrollLeft += this.scrollOffset;
+      });
+      this.prevButton.addEventListener("click", () => {
+        this.imagesContainer.scrollLeft -= this.scrollOffset;
+      });
+
+      this.imageSelector.addEventListener("change", (event) => {
+        const target = event.target as HTMLInputElement;
+        if (target && target.dataset.index) {
+          const index = parseInt(target.dataset.index);
+          this.selectImage(index);
+        }
+      });
+    }
+
+    disconnectedCallback() {
+      console.log("VafoImageCarousel disconnected");
+      this.nextButton.removeEventListener("click", () => {
+        this.imagesContainer.scrollLeft += this.scrollOffset;
+      });
+      this.prevButton.removeEventListener("click", () => {
+        this.imagesContainer.scrollLeft -= this.scrollOffset;
+      });
     }
 
     static get observedAttributes() {
@@ -64,6 +106,13 @@
     get images() {
       const imagesAttr = this.getAttribute("images");
       return imagesAttr ? imagesAttr.split(",") : [];
+    }
+
+    selectImage(index: number) {
+      console.log(index);
+
+      const offset = index * this.scrollOffset;
+      this.imagesContainer.scrollLeft = offset;
     }
   }
 
