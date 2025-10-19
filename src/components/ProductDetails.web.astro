@@ -30,8 +30,8 @@ interface Props {
     <div class="product-details__subscribe-cta">
       <p class="s1">Subscribe & Save 25%!</p>
       <div class="product-details__subscription-type">
-        <div class="product-details__subscription-type-box">
-          <label class="s2" for="subscribe-radio">Subscription</label>
+        <label class="product-details__subscription-type-box">
+          <span class="s2">Subscription</span>
           <input
             type="radio"
             name="subscription"
@@ -39,16 +39,16 @@ interface Props {
             checked
             id="subscribe-radio"
           />
-        </div>
-        <div class="product-details__subscription-type-box">
-          <label for="one-off-radio">One-off</label>
+        </label>
+        <label class="product-details__subscription-type-box">
+          <span class="s2">One-off</span>
           <input
             type="radio"
             name="subscription"
             value="one-off"
             id="one-off-radio"
           />
-        </div>
+        </label>
       </div>
       <p class="s1">Delivery Frequency</p>
       <select name="delivery-frequency" id="delivery-frequency">
@@ -98,15 +98,11 @@ interface Props {
     background-color: var(--surface-brand);
   }
   .product-details__subscription-type {
-    /* display: flex;
-
-    align-items: center; */
-    gap: var(--spacing-6);
-    margin-top: var(--spacing-4);
-    margin-bottom: var(--spacing-6);
+    margin-block: var(--spacing-4) var(--spacing-6);
   }
 
   .product-details__subscription-type-box {
+    cursor: pointer;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -123,7 +119,7 @@ interface Props {
     border: 1px solid var(--border-primary);
   }
   .product-details__description {
-    color: var(--text-secondary);
+    color: var(--text-minimal);
   }
   .product-details__description ul {
     padding-left: var(--spacing-6);
